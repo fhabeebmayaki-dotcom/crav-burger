@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRAV — The Burger | Smash Burgers, Zero Apologies</title>
+<meta name="description" content="CRAV is a smash-burger joint with huge flavour and bigger type. Build your own burger, order in two taps, find us in three cities.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,500;0,700;0,900;1,900&family=Archivo+Black&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --red:#e8232a; --red-dark:#b30f16; --cream:#f6ecd9; --cream-2:#efe1c6;
+    --ink:#17120c; --ink-2:#241b10; --yellow:#ffc61a; --white:#fffaf0;
+    --shadow:0 24px 50px rgba(23,18,12,.28);
+    --disp:'Archivo Black','Archivo',sans-serif; --sans:'Inter',Helvetica,Arial,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--sans);background:var(--cream);color:var(--ink);line-height:1.55;overflow-x:hidden}
+  img{display:block;max-width:100%}
+  a{color:inherit;text-decoration:none}
+  button{font-family:var(--sans);cursor:pointer}
+  .wrap{width:min(1280px,93%);margin:0 auto}
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  /* Ticker */
+  .ticker{background:var(--ink);color:var(--cream);overflow:hidden;white-space:nowrap;padding:.5rem 0;font-weight:700;letter-spacing:.18em;font-size:.72rem;text-transform:uppercase}
+  .ticker-track{display:inline-block;animation:tick 26s linear infinite}
+  .ticker-track span{margin:0 1.6rem}
+  .ticker-track b{color:var(--yellow)}
+  @keyframes tick{to{transform:translateX(-50%)}}
+
+  header{position:sticky;top:0;z-index:60;background:var(--red);color:#fff;box-shadow:0 6px 24px rgba(179,15,22,.35)}
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:.8rem 0;gap:1rem}
+  .logo{font-family:var(--disp);font-size:1.9rem;letter-spacing:.02em;color:#fff}
+  .logo i{color:var(--yellow);font-style:normal}
+  .nav-links{display:flex;gap:2rem;font-weight:700;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase}
+  .nav-links a:hover{color:var(--yellow)}
+  .order-btn{background:var(--yellow);color:var(--ink);border:none;padding:.7rem 1.4rem;font-weight:800;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;border-radius:999px;display:flex;gap:.5rem;align-items:center;transition:transform .2s, background .2s}
+  .order-btn:hover{transform:scale(1.05);background:#fff}
+  .order-count{background:var(--red);color:#fff;border-radius:50%;min-width:22px;height:22px;display:grid;place-items:center;font-size:.72rem;padding:0 4px}
+
+  /* Hero */
+  .hero{background:var(--red);color:#fff;position:relative;overflow:hidden;padding:3.2rem 0 4.5rem}
+  .hero::after{content:"CRAV";position:absolute;bottom:-4.5rem;left:50%;transform:translateX(-50%);font-family:var(--disp);font-size:19rem;line-height:1;color:rgba(255,255,255,.08);pointer-events:none;white-space:nowrap}
+  .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:2.5rem;align-items:center;position:relative;z-index:1}
+  .hero-kicker{display:inline-block;background:var(--ink);color:var(--yellow);font-weight:800;letter-spacing:.22em;font-size:.7rem;text-transform:uppercase;padding:.5rem 1rem;border-radius:999px}
+  .hero h1{font-family:var(--disp);font-size:clamp(3.4rem,9vw,7rem);line-height:.95;text-transform:uppercase;margin:1.2rem 0 .4rem}
+  .hero h1 .out{color:transparent;-webkit-text-stroke:2.5px #fff}
+  .hero h1 .yl{color:var(--yellow)}
+  .hero p{font-size:1.08rem;max-width:29rem;color:#ffe3e4;font-weight:500}
+  .hero-ctas{display:flex;gap:1rem;margin-top:2rem;flex-wrap:wrap}
+  .btn{display:inline-block;padding:1rem 2rem;border-radius:999px;font-weight:800;font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;border:3px solid var(--ink);transition:.25s}
+  .btn-ink{background:var(--ink);color:#fff}
+  .btn-ink:hover{background:var(--yellow);color:var(--ink)}
+  .btn-clear{background:transparent;color:#fff;border-color:#fff}
+  .btn-clear:hover{background:#fff;color:var(--red)}
+  .hero-meta{display:flex;gap:2.2rem;margin-top:2.4rem;font-weight:700;font-size:.85rem;text-transform:uppercase;letter-spacing:.06em}
+  .hero-meta b{font-family:var(--disp);font-size:1.5rem;display:block;letter-spacing:0}
+  .hero-photo{position:relative}
+  .hero-photo img{width:100%;height:520px;object-fit:cover;border-radius:26px;border:4px solid var(--ink);box-shadow:12px 12px 0 var(--ink)}
+  .sticker{position:absolute;background:var(--yellow);color:var(--ink);font-family:var(--disp);padding:.9rem 1.1rem;border-radius:50%;width:118px;height:118px;display:grid;place-items:center;text-align:center;font-size:.82rem;line-height:1.15;transform:rotate(-10deg);border:3px solid var(--ink);top:-26px;right:-14px;z-index:2}
+  .price-tag{position:absolute;bottom:22px;left:-18px;background:#fff;color:var(--ink);border:3px solid var(--ink);border-radius:14px;padding:.7rem 1.1rem;font-weight:800;box-shadow:6px 6px 0 var(--ink)}
+  .price-tag b{color:var(--red);font-family:var(--disp);font-size:1.25rem}
+
+  /* Marquee band */
+  .band{background:var(--ink);color:var(--cream);transform:rotate(-1.2deg) scale(1.02);padding:1rem 0;overflow:hidden;white-space:nowrap}
+  .band-track{display:inline-block;animation:tick 30s linear infinite;font-family:var(--disp);font-size:1.6rem;text-transform:uppercase}
+  .band-track span{margin:0 1.4rem}
+  .band-track .r{color:var(--red)} .band-track .y{color:var(--yellow)}
+
+  /* Menu */
+  section{padding:5.5rem 0}
+  .sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;margin-bottom:2.6rem;flex-wrap:wrap}
+  .sec-head h2{font-family:var(--disp);font-size:clamp(2.4rem,5.5vw,4rem);text-transform:uppercase;line-height:1}
+  .sec-head h2 span{color:var(--red)}
+  .sec-head p{max-width:26rem;color:#5c4c33;font-weight:500}
+  .menu-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem}
+  .m-card{background:var(--white);border:3px solid var(--ink);border-radius:20px;overflow:hidden;transition:transform .3s, box-shadow .3s;display:flex;flex-direction:column}
+  .m-card:hover{transform:translateY(-6px) rotate(-.4deg);box-shadow:8px 8px 0 var(--ink)}
+  .m-card img{width:100%;height:190px;object-fit:cover;border-bottom:3px solid var(--ink)}
+  .m-body{padding:1.15rem 1.15rem 1.3rem;display:flex;flex-direction:column;gap:.4rem;flex:1}
+  .m-top{display:flex;justify-content:space-between;align-items:start;gap:.6rem}
+  .m-body h3{font-family:var(--disp);font-size:1.12rem;line-height:1.15;text-transform:uppercase}
+  .m-price{font-family:var(--disp);color:var(--red);font-size:1.15rem;white-space:nowrap}
+  .m-body p{font-size:.87rem;color:#5c4c33;flex:1;font-weight:500}
+  .m-tags{display:flex;gap:.4rem;flex-wrap:wrap}
+  .m-tags span{background:var(--cream-2);border:1.5px solid var(--ink);border-radius:999px;font-size:.64rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:.22rem .6rem}
+  .m-add{margin-top:.9rem;background:var(--red);color:#fff;border:3px solid var(--ink);border-radius:999px;padding:.7rem;font-weight:800;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;transition:.2s}
+  .m-add:hover{background:var(--ink)}
+
+  /* Builder */
+  .builder{background:var(--ink);color:var(--cream);border-radius:34px;padding:3.2rem;margin:0 auto}
+  .builder-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem}
+  .builder h2{font-family:var(--disp);font-size:clamp(2rem,4.5vw,3.2rem);text-transform:uppercase;line-height:1.02;color:#fff}
+  .builder h2 span{color:var(--yellow)}
+  .builder .sub{color:#cdbfa4;margin:.9rem 0 2rem;font-weight:500}
+  .layer-group{margin-bottom:1.5rem}
+  .layer-group h4{font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:var(--yellow);margin-bottom:.6rem;font-weight:800}
+  .chips{display:flex;flex-wrap:wrap;gap:.55rem}
+  .chip{background:transparent;border:2px solid #57492f;color:var(--cream);border-radius:999px;padding:.55rem 1.05rem;font-weight:600;font-size:.86rem;transition:.2s}
+  .chip:hover{border-color:var(--yellow)}
+  .chip.on{background:var(--red);border-color:var(--red);color:#fff}
+  .stack-view{background:var(--ink-2);border:2px dashed #57492f;border-radius:22px;padding:1.8rem;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:340px;text-align:center}
+  .stack-list{display:flex;flex-direction:column-reverse;gap:.35rem;width:min(320px,85%)}
+  .layer{background:var(--cream);color:var(--ink);border-radius:10px;padding:.5rem .8rem;font-weight:800;font-size:.82rem;text-transform:uppercase;letter-spacing:.05em;animation:drop .35s ease}
+  .layer.bun{background:var(--yellow)} .layer.patty{background:#7a4a21;color:#fff} .layer.cheese{background:#ff9d1a}
+  .layer.green{background:#57a639;color:#fff} .layer.sauce{background:var(--red);color:#fff}
+  @keyframes drop{from{transform:translateY(-16px);opacity:0}to{transform:none;opacity:1}}
+  .stack-empty{color:#8d7c5c;font-weight:600}
+  .stack-total{margin-top:1.6rem;font-family:var(--disp);font-size:1.6rem;color:#fff}
+  .stack-total span{color:var(--yellow)}
+  .stack-add{margin-top:1rem;background:var(--yellow);color:var(--ink);border:none;border-radius:999px;padding:.95rem 2rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;font-size:.85rem;transition:.2s}
+  .stack-add:hover{background:var(--red);color:#fff}
+  .stack-reset{background:none;border:none;color:#8d7c5c;text-decoration:underline;font-size:.8rem;margin-top:.6rem}
+
+  /* Sides strip */
+  .sides{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-top:1.4rem}
+  .side-card{position:relative;border-radius:20px;overflow:hidden;border:3px solid var(--ink);min-height:230px;display:flex;align-items:flex-end}
+  .side-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .side-card::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 40%,rgba(23,18,12,.82))}
+  .side-info{position:relative;z-index:1;color:#fff;padding:1.2rem;width:100%;display:flex;justify-content:space-between;align-items:flex-end;gap:1rem}
+  .side-info h3{font-family:var(--disp);text-transform:uppercase;font-size:1.25rem;line-height:1.1}
+  .side-info p{font-size:.82rem;color:#e8dcc2;font-weight:500}
+  .side-add{background:var(--yellow);border:3px solid var(--ink);color:var(--ink);border-radius:999px;width:46px;height:46px;font-size:1.4rem;font-weight:900;flex:none;line-height:1}
+  .side-add:hover{background:var(--red);color:#fff}
+
+  /* Locations */
+  .locations{background:var(--red);color:#fff}
+  .locations h2{font-family:var(--disp);font-size:clamp(2.2rem,5vw,3.6rem);text-transform:uppercase;margin-bottom:2.2rem}
+  .locations h2 span{color:var(--yellow)}
+  .loc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+  .loc{background:var(--ink);border-radius:20px;padding:1.8rem;border:3px solid var(--ink)}
+  .loc h3{font-family:var(--disp);font-size:1.4rem;text-transform:uppercase;margin-bottom:.5rem}
+  .loc p{color:#e8dcc2;font-size:.92rem;font-weight:500}
+  .loc .open{display:inline-block;margin-top:1rem;background:var(--red);padding:.35rem .8rem;border-radius:999px;font-size:.68rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+
+  /* Footer */
+  footer{background:var(--ink);color:#cdbfa4;padding:4rem 0 2rem}
+  .foot-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:2.5rem;margin-bottom:3rem}
+  footer .logo{font-size:2.4rem}
+  footer h4{color:#fff;font-family:var(--disp);text-transform:uppercase;font-size:1rem;margin-bottom:1rem}
+  footer ul{list-style:none} footer li{margin-bottom:.5rem;font-size:.92rem;font-weight:500}
+  footer a:hover{color:var(--yellow)}
+  .foot-bar{border-top:1px solid #3a2d1b;padding-top:1.4rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;font-size:.8rem}
+
+  /* Cart drawer */
+  .overlay{position:fixed;inset:0;background:rgba(23,18,12,.6);opacity:0;pointer-events:none;transition:.3s;z-index:80}
+  .overlay.open{opacity:1;pointer-events:auto}
+  .drawer{position:fixed;top:0;right:0;height:100dvh;width:min(440px,95vw);background:var(--cream);z-index:90;transform:translateX(105%);transition:transform .45s cubic-bezier(.22,.8,.3,1);display:flex;flex-direction:column;border-left:4px solid var(--ink)}
+  .drawer.open{transform:none}
+  .drawer-head{background:var(--red);color:#fff;padding:1.3rem 1.6rem;display:flex;justify-content:space-between;align-items:center}
+  .drawer-head h3{font-family:var(--disp);text-transform:uppercase;font-size:1.35rem}
+  .icon-btn{background:none;border:none;color:#fff;font-size:1.6rem;line-height:1}
+  .drawer-items{flex:1;overflow-y:auto;padding:1.2rem 1.4rem;display:flex;flex-direction:column;gap:.9rem}
+  .empty-cart{text-align:center;color:#8d7c5c;font-weight:600;padding:2.6rem 1rem}
+  .c-item{display:grid;grid-template-columns:58px 1fr auto;gap:.9rem;align-items:center;background:#fff;border:2.5px solid var(--ink);border-radius:14px;padding:.6rem}
+  .c-item img{width:58px;height:58px;object-fit:cover;border-radius:9px}
+  .c-item h4{font-family:var(--disp);font-size:.92rem;text-transform:uppercase;line-height:1.15}
+  .c-item .c-sub{font-size:.74rem;color:#8d7c5c;font-weight:600}
+  .qty{display:inline-flex;gap:.5rem;align-items:center;margin-top:.3rem}
+  .qty button{width:24px;height:24px;border:2px solid var(--ink);background:var(--cream);border-radius:6px;font-weight:900;line-height:1}
+  .c-right{text-align:right}
+  .c-right b{font-family:var(--disp);color:var(--red)}
+  .c-remove{display:block;background:none;border:none;color:#b09a6d;font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;text-decoration:underline;margin-top:.35rem}
+  .drawer-form{border-top:3px solid var(--ink);padding:1.3rem 1.4rem;background:#fff}
+  .drawer-form input{width:100%;border:2.5px solid var(--ink);border-radius:10px;padding:.75rem .9rem;font-family:var(--sans);margin-bottom:.6rem;font-size:.92rem;background:var(--cream)}
+  .total-row{display:flex;justify-content:space-between;font-family:var(--disp);font-size:1.35rem;margin:.4rem 0 1rem}
+  .total-row span:last-child{color:var(--red)}
+  .checkout-btn{width:100%;background:var(--red);color:#fff;border:3px solid var(--ink);border-radius:999px;padding:1rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:.88rem;transition:.2s}
+  .checkout-btn:hover{background:var(--ink)}
+  .order-done{display:none;text-align:center;padding:1.4rem .4rem}
+  .order-done.show{display:block}
+  .order-done .big{font-family:var(--disp);font-size:1.7rem;text-transform:uppercase;color:var(--red);margin-bottom:.4rem}
+  .order-done p{font-weight:600;color:#5c4c33;font-size:.92rem}
+
+  .toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,90px);background:var(--ink);color:#fff;padding:.9rem 1.7rem;border-radius:999px;font-weight:700;font-size:.88rem;z-index:120;transition:transform .4s cubic-bezier(.22,.8,.3,1);border:3px solid var(--yellow);white-space:nowrap}
+  .toast.show{transform:translate(-50%,0)}
+  .toast b{color:var(--yellow)}
+
+  @media(max-width:1080px){.menu-grid{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:860px){
+    .nav-links{display:none}
+    .hero-grid,.builder-grid{grid-template-columns:1fr}
+    .hero-photo img{height:400px}
+    .menu-grid{grid-template-columns:repeat(2,1fr)}
+    .sides,.loc-grid,.foot-grid{grid-template-columns:1fr}
+    .builder{padding:2rem 1.4rem}
+    .hero::after{font-size:10rem;bottom:-2rem}
+  }
+  @media(max-width:520px){.menu-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="ticker"><div class="ticker-track" id="tickerTrack"></div></div>
+
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#">CRAV<i>.</i></a>
+    <nav class="nav-links"><a href="#menu">Menu</a><a href="#builder">Build Yours</a><a href="#sides">Sides</a><a href="#locations">Locations</a></nav>
+    <button class="order-btn" id="openCart">My Order <span class="order-count" id="cartCount">0</span></button>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="wrap hero-grid">
+    <div class="reveal in">
+      <span class="hero-kicker">Smash burgers · Est. 2019</span>
+      <h1>The<br><span class="out">Burger</span><br><span class="yl">You Crav</span></h1>
+      <p>Two patties smashed thin on a screaming-hot grill, edges lacy and crisp, drowned in our secret CRAV sauce. No frozen anything. No small type. No apologies.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-ink" href="#menu">See the Menu</a>
+        <a class="btn btn-clear" href="#builder">Build Your Own</a>
+      </div>
+      <div class="hero-meta">
+        <div><b>4.9</b>avg rating</div>
+        <div><b>12 min</b>avg wait</div>
+        <div><b>3</b>cities</div>
+      </div>
+    </div>
+    <div class="hero-photo reveal in">
+      <div class="sticker">100% smashed fresh</div>
+      <img src="images/hero.jpg" alt="The CRAV double smash burger">
+      <div class="price-tag">The OG Crav — <b>$11.50</b></div>
+    </div>
+  </div>
+</div>
+
+<div class="band"><div class="band-track" id="bandTrack"></div></div>
+
+<!-- MENU -->
+<section id="menu">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>The <span>Line-Up</span></h2>
+      <p>Eight heavy hitters. Every burger is smashed to order on potato buns baked this morning. Tap add — your order builds itself.</p>
+    </div>
+    <div class="menu-grid" id="menuGrid"></div>
+  </div>
+</section>
+
+<!-- BUILDER -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="builder reveal" id="builder">
+      <div class="builder-grid">
+        <div>
+          <h2>Build your<br><span>monster</span></h2>
+          <p class="sub">Start with a bun, stack whatever you want, watch it pile up. Base price $4.00 — every layer adds its bit. When it looks right, throw it in the order.</p>
+          <div id="layerGroups"></div>
+        </div>
+        <div>
+          <div class="stack-view">
+            <div class="stack-list" id="stackList"><p class="stack-empty">Your stack is empty.<br>Tap some layers to start building.</p></div>
+            <div class="stack-total">Total: <span id="stackTotal">$4.00</span></div>
+            <button class="stack-add" id="stackAdd">Add My Burger to Order</button>
+            <button class="stack-reset" id="stackReset">Start over</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SIDES -->
+<section id="sides" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>Sides &amp; <span>Shakes</span></h2>
+      <p>The supporting act that steals the show. Loaded fries, rings the size of bracelets, and a chocolate shake that needs a spoon AND a straw.</p>
+    </div>
+    <div class="sides" id="sidesGrid"></div>
+  </div>
+</section>
+
+<!-- LOCATIONS -->
+<section class="locations" id="locations">
+  <div class="wrap">
+    <h2 class="reveal">Find a <span>Crav</span></h2>
+    <div class="loc-grid">
+      <div class="loc reveal"><h3>Downtown</h3><p>418 Smash Avenue<br>Open every day, 11:00 — 23:00<br>The original. Expect a line at lunch — it moves fast.</p><span class="open">Open now</span></div>
+      <div class="loc reveal"><h3>Riverside</h3><p>77 Dockside Walk<br>Open every day, 11:00 — 00:00<br>River views, rooftop seating, same loud kitchen.</p><span class="open">Open now</span></div>
+      <div class="loc reveal"><h3>Northgate</h3><p>1200 Stadium Road<br>Open every day, 10:30 — 23:30<br>Next to the arena. Game-day specials every home game.</p><span class="open">Open now</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="logo" href="#">CRAV<i>.</i></a>
+        <p style="margin-top:.8rem;max-width:19rem;font-weight:500">Smash burgers with huge flavour and bigger type. A demo storefront — make it yours: swap the menu, prices and cities in minutes.</p>
+      </div>
+      <div><h4>Menu</h4><ul><li><a href="#menu">The Line-Up</a></li><li><a href="#builder">Build Your Own</a></li><li><a href="#sides">Sides &amp; Shakes</a></li></ul></div>
+      <div><h4>Talk to us</h4><ul><li>hello@crav.example</li><li>+1 (555) 010-CRAV</li><li>@cravburgers (social)</li></ul></div>
+    </div>
+    <div class="foot-bar"><span>© 2026 CRAV Burgers — demo storefront.</span><span>Photos: Unsplash. Replace with your own food photography before launch.</span></div>
+  </div>
+</footer>
+
+<!-- CART -->
+<div class="overlay" id="overlay"></div>
+<aside class="drawer" id="drawer" aria-label="Your order">
+  <div class="drawer-head"><h3>Your Order</h3><button class="icon-btn" id="closeCart" aria-label="Close order">&times;</button></div>
+  <div class="drawer-items" id="drawerItems"></div>
+  <div class="drawer-form" id="orderFormWrap">
+    <input type="text" id="custName" placeholder="Your name" autocomplete="name">
+    <input type="text" id="custAddr" placeholder="Pickup or delivery address" autocomplete="street-address">
+    <div class="total-row"><span>Total</span><span id="cartTotal">$0.00</span></div>
+    <button class="checkout-btn" id="checkoutBtn">Place Order</button>
+    <div class="order-done" id="orderDone">
+      <p class="big">Order fired!</p>
+      <p id="orderMsg"></p>
+    </div>
+  </div>
+</aside>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const MENU = [
+  {id:1, name:"The OG Crav", price:11.50, img:"images/hero.jpg", desc:"Double smash patties, American cheese, pickles, shredded lettuce and secret CRAV sauce.", tags:["Signature","Double"]},
+  {id:2, name:"Classic Stack", price:9.75, img:"images/classic.jpg", desc:"The timeless build — beef, cheddar, tomato, lettuce and mayo on a toasted sesame potato bun.", tags:["Classic"]},
+  {id:3, name:"Slider Duo", price:8.50, img:"images/sliders.jpg", desc:"Two mini smash sliders with caramelised onion and house pickles. Small size, full volume.", tags:["For sharing"]},
+  {id:4, name:"Crispy Bird", price:10.25, img:"images/chicken.jpg", desc:"Buttermilk fried chicken thigh, honey butter glaze, slaw and pickles. Crunch you can hear.", tags:["Chicken","Spicy honey"]},
+  {id:5, name:"Triple Threat", price:14.95, img:"images/stack.jpg", desc:"Three patties, three cheeses, crispy shallots and double sauce. Finish it and the wall of fame awaits.", tags:["Triple","Challenge"]},
+  {id:6, name:"Backyard BBQ", price:11.95, img:"images/backyard.jpg", desc:"Smoky BBQ sauce, beef, cheddar and a pile of golden fries riding shotgun. Cookout energy, no mosquitoes.", tags:["BBQ"]},
+  {id:7, name:"Double Trouble", price:13.25, img:"images/double.jpg", desc:"Double smashed patties under a molten cheddar blanket with pickles and diced onion. Beautifully excessive.", tags:["Double","Cheesy"]},
+  {id:8, name:"Loaded Fries Feast", price:7.50, img:"images/fries.jpg", desc:"A mountain of skin-on fries loaded with cheese sauce, CRAV dust and spring onion. Technically a side. Practically dinner.", tags:["Loaded","Veggie"]}
+];
+const SIDES = [
+  {id:101, name:"CRAV Fries", price:4.25, img:"images/fries.jpg", desc:"Skin-on, twice-cooked, CRAV dust."},
+  {id:102, name:"Big Rings", price:5.50, img:"images/rings.jpg", desc:"Beer-battered onion rings, smoky dip."},
+  {id:103, name:"Choc Freakshake", price:6.95, img:"images/shake.jpg", desc:"Chocolate, whipped cream, brownie rubble."}
+];
+const LAYERS = [
+  {group:"Buns", cls:"bun", items:[{n:"Potato Bun",p:0},{n:"Brioche Bun",p:0.80},{n:"Pretzel Bun",p:1.10}]},
+  {group:"Patties", cls:"patty", items:[{n:"Smash Patty",p:3.20},{n:"Double Patty",p:5.90},{n:"Crispy Chicken",p:3.60}]},
+  {group:"Cheese", cls:"cheese", items:[{n:"American Cheese",p:0.90},{n:"Cheddar",p:1.00},{n:"Cheese Blanket",p:1.60}]},
+  {group:"Fresh", cls:"green", items:[{n:"Lettuce & Tomato",p:0.60},{n:"Pickles & Onion",p:0.50},{n:"Slaw",p:0.70}]},
+  {group:"Sauce", cls:"sauce", items:[{n:"CRAV Sauce",p:0.40},{n:"Smoky BBQ",p:0.40},{n:"Honey Heat",p:0.60}]}
+];
+const BASE = 4.00;
+const money = n => '$' + n.toFixed(2);
+
+/* Menu + sides render */
+const menuGrid = document.getElementById('menuGrid');
+MENU.forEach(m => {
+  const el = document.createElement('article');
+  el.className = 'm-card reveal';
+  el.innerHTML = '<img src="'+m.img+'" alt="'+m.name+'" loading="lazy"><div class="m-body">' +
+    '<div class="m-top"><h3>'+m.name+'</h3><span class="m-price">'+money(m.price)+'</span></div>' +
+    '<p>'+m.desc+'</p><div class="m-tags">'+ m.tags.map(t => '<span>'+t+'</span>').join('') +'</div>' +
+    '<button class="m-add" data-add="'+m.id+'">Add to Order</button></div>';
+  menuGrid.appendChild(el);
+});
+const sidesGrid = document.getElementById('sidesGrid');
+SIDES.forEach(s => {
+  const el = document.createElement('div');
+  el.className = 'side-card reveal';
+  el.innerHTML = '<img src="'+s.img+'" alt="'+s.name+'" loading="lazy"><div class="side-info"><div><h3>'+s.name+'</h3><p>'+s.desc+' — '+money(s.price)+'</p></div>' +
+    '<button class="side-add" data-add="'+s.id+'" aria-label="Add '+s.name+'">+</button></div>';
+  sidesGrid.appendChild(el);
+});
+
+/* Builder */
+const stack = []; // layer item refs
+const groupsBox = document.getElementById('layerGroups');
+LAYERS.forEach(g => {
+  const wrap = document.createElement('div');
+  wrap.className = 'layer-group';
+  wrap.innerHTML = '<h4>'+g.group+'</h4>';
+  const chips = document.createElement('div'); chips.className = 'chips';
+  g.items.forEach(it => {
+    const c = document.createElement('button');
+    c.className = 'chip'; c.textContent = it.n + ' · ' + money(it.p);
+    c.addEventListener('click', () => {
+      if(g.group === 'Buns'){ stack.splice(0, stack.length, ...stack.filter(x => x.cls !== 'bun')); }
+      stack.push({n:it.n, p:it.p, cls:g.cls});
+      renderStack();
+    });
+    chips.appendChild(c);
+  });
+  wrap.appendChild(chips);
+  groupsBox.appendChild(wrap);
+});
+function stackPrice(){ return BASE + stack.reduce((s,x) => s + x.p, 0); }
+function renderStack(){
+  const list = document.getElementById('stackList');
+  if(!stack.length){ list.innerHTML = '<p class="stack-empty">Your stack is empty.<br>Tap some layers to start building.</p>'; }
+  else {
+    list.innerHTML = '';
+    stack.forEach(l => { const d = document.createElement('div'); d.className = 'layer ' + l.cls; d.textContent = l.n; list.appendChild(d); });
+  }
+  document.getElementById('stackTotal').textContent = money(stackPrice());
+}
+document.getElementById('stackReset').addEventListener('click', () => { stack.length = 0; renderStack(); });
+let customSeq = 0;
+document.getElementById('stackAdd').addEventListener('click', () => {
+  if(!stack.length){ toast('Add at least one layer first'); return; }
+  customSeq++;
+  addToCart(900 + customSeq, 'Custom Build #' + customSeq + ' (' + stack.map(x => x.n).join(', ') + ')', stackPrice(), 'images/hero.jpg');
+  stack.length = 0; renderStack();
+});
+
+/* Cart */
+let cart = [];
+const drawer = document.getElementById('drawer'), overlay = document.getElementById('overlay');
+function openCart(){ drawer.classList.add('open'); overlay.classList.add('open'); }
+function closeCart(){ drawer.classList.remove('open'); overlay.classList.remove('open'); }
+document.getElementById('openCart').addEventListener('click', openCart);
+document.getElementById('closeCart').addEventListener('click', closeCart);
+overlay.addEventListener('click', closeCart);
+
+function findItem(id){
+  return MENU.find(m => m.id === id) || SIDES.find(s => s.id === id);
+}
+function addToCart(id, nameOverride, priceOverride, imgOverride){
+  const base = findItem(id);
+  const name = nameOverride || (base && base.name) || 'Custom Burger';
+  const price = priceOverride !== undefined ? priceOverride : base.price;
+  const img = imgOverride || base.img;
+  const key = nameOverride ? 'c' + id : 'i' + id;
+  const found = cart.find(i => i.key === key);
+  if(found) found.qty++;
+  else cart.push({key, name, price, img, qty:1});
+  renderCart();
+  toast('<b>' + name + '</b> added to your order');
+}
+function renderCart(){
+  const box = document.getElementById('drawerItems');
+  document.getElementById('cartCount').textContent = cart.reduce((s,i) => s + i.qty, 0);
+  if(!cart.length){
+    box.innerHTML = '<div class="empty-cart">Nothing here yet.<br>The grill is waiting.</div>';
+  } else {
+    box.innerHTML = '';
+    cart.forEach(item => {
+      const row = document.createElement('div');
+      row.className = 'c-item';
+      row.innerHTML = '<img src="'+item.img+'" alt="">' +
+        '<div><h4>'+item.name+'</h4><span class="c-sub">'+money(item.price)+' each</span>' +
+        '<div class="qty"><button data-dec="'+item.key+'">−</button><span>'+item.qty+'</span><button data-inc="'+item.key+'">+</button></div></div>' +
+        '<div class="c-right"><b>'+money(item.price*item.qty)+'</b><button class="c-remove" data-rem="'+item.key+'">Remove</button></div>';
+      box.appendChild(row);
+    });
+  }
+  document.getElementById('cartTotal').textContent = money(cart.reduce((s,i) => s + i.price*i.qty, 0));
+  document.getElementById('orderDone').classList.remove('show');
+}
+document.getElementById('drawerItems').addEventListener('click', e => {
+  const inc = e.target.closest('[data-inc]'), dec = e.target.closest('[data-dec]'), rem = e.target.closest('[data-rem]');
+  if(inc) cart.find(i => i.key === inc.dataset.inc).qty++;
+  if(dec){ const it = cart.find(i => i.key === dec.dataset.dec); it.qty--; if(it.qty < 1) cart = cart.filter(i => i.key !== it.key); }
+  if(rem) cart = cart.filter(i => i.key !== rem.dataset.rem);
+  if(inc || dec || rem) renderCart();
+});
+document.addEventListener('click', e => {
+  const add = e.target.closest('[data-add]');
+  if(add) addToCart(+add.dataset.add);
+});
+document.getElementById('checkoutBtn').addEventListener('click', () => {
+  if(!cart.length){ toast('Your order is empty — add something tasty first'); return; }
+  const name = document.getElementById('custName').value.trim();
+  const addr = document.getElementById('custAddr').value.trim();
+  const no = 'CRAV-' + Math.floor(100 + Math.random()*900);
+  document.getElementById('orderMsg').textContent =
+    'Order ' + no + ' confirmed' + (name ? ' for ' + name : '') + '. ' +
+    (addr ? 'We are heading to ' + addr + ' — about 25 minutes.' : 'Ready for pickup at the counter in about 12 minutes.');
+  document.getElementById('orderDone').classList.add('show');
+  cart = []; document.getElementById('cartCount').textContent = 0;
+  document.getElementById('drawerItems').innerHTML = '<div class="empty-cart">Order sent to the kitchen.<br>Start a fresh one whenever.</div>';
+  document.getElementById('cartTotal').textContent = money(0);
+});
+renderCart(); renderStack();
+
+/* Tickers + toast + reveal */
+const tickWords = '<span>Now smashing</span><b>·</b><span>No frozen patties, ever</span><b>·</b><span>Secret CRAV sauce</span><b>·</b><span>Buns baked at dawn</span><b>·</b>';
+document.getElementById('tickerTrack').innerHTML = tickWords.repeat(6);
+const bandWords = '<span>Smash</span><span class="r">Sizzle</span><span>Stack</span><span class="y">Sauce</span><span>Repeat</span><span class="r">·</span>';
+document.getElementById('bandTrack').innerHTML = bandWords.repeat(6);
+
+let toastTimer;
+function toast(html){
+  const t = document.getElementById('toast');
+  t.innerHTML = html; t.classList.add('show');
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 2400);
+}
+const io = new IntersectionObserver(es => es.forEach(en => { if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } }), {threshold:.1});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeCart(); });
+</script>
+</body>
+</html>
